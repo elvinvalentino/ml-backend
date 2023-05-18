@@ -153,12 +153,27 @@ class PredictController:
         df["Tanggal"] = df_backup["Tanggal"]
         df["Tahun"] = df_backup["Tahun"]
 
-        df_grouped = df.groupby(
-            [df["Nama"], df["Bulan"], df["Tahun"], df["Harga Per Item"]]
-        ).aggregate({"Quantity": "sum"})
-        df_grouped.reset_index(inplace=True)
-        df_grouped_sorted = df_grouped.sort_values(
-            by=["Tahun", "Bulan"], ascending=True
-        )
+        # df_grouped = df.groupby(
+        #     [df["Nama"], df["Bulan"], df["Tahun"], df["Harga Per Item"]]
+        # ).aggregate({"Quantity": "sum"})
+        # df_grouped.reset_index(inplace=True)
+        # df_grouped_sorted = df_grouped.sort_values(
+        #     by=["Tahun", "Bulan"], ascending=True
+        # )
 
-        return loads(df_grouped_sorted.to_json(orient="records"))
+        return loads(
+            df[
+                [
+                    "Nama",
+                    "Harga Per Item",
+                    "Quantity",
+                    "Di Tanggal",
+                    "Bulan",
+                    "Tahun",
+                    "Tanggal",
+                    "Hari",
+                    "Weekend",
+                    "Hari Libur",
+                ]
+            ].to_json(orient="records")
+        )
